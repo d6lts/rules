@@ -2,7 +2,8 @@
 
 namespace Drupal\rules\Plugin\RulesAction;
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Render\Markup;
 use Drupal\rules\Core\RulesActionBase;
 
 /**
@@ -45,9 +46,9 @@ class SystemMessage extends RulesActionBase {
   protected function doExecute($message, $type, $repeat) {
     // @todo Should we do the sanitization somewhere else? D7 had the sanitize
     // flag in the context definition.
-    $message = SafeMarkup::checkPlain($message);
+    $message = Xss::filterAdmin($message);
     $repeat = (bool) $repeat;
-    drupal_set_message($message, $type, $repeat);
+    drupal_set_message(Markup::create($message), $type, $repeat);
   }
 
 }
