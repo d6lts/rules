@@ -91,7 +91,21 @@ class EntityCreateDeriver extends DeriverBase implements ContainerDeriverInterfa
         }
 
         $item_definition = $definition->getItemDefinition();
-        $type_definition = $item_definition->getPropertyDefinition($item_definition->getMainPropertyName());
+
+        // @todo Add support for multi-property fields for entity creation.
+        // @see https://www.drupal.org/node/2748791.
+        $main_property_name = $item_definition->getMainPropertyName();
+
+        if (is_null($main_property_name)) {
+          continue;
+        }
+
+        $type_definition = $item_definition->getPropertyDefinition($main_property_name);
+
+        // Get around types which don't properly define their main property (or lack of one)
+        if (is_null($type_definition)) {
+          continue;
+        }
 
         // If this is an entity reference then we expect the target type as
         // context.
