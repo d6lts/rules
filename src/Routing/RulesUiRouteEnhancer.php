@@ -2,11 +2,10 @@
 
 namespace Drupal\rules\Routing;
 
-use Drupal\Core\Routing\Enhancer\RouteEnhancerInterface;
+use Drupal\Core\Routing\EnhancerInterface;
 use Drupal\rules\Ui\RulesUiManagerInterface;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Route;
 
 /**
  * Enhances routes with the specified RulesUI.
@@ -18,7 +17,7 @@ use Symfony\Component\Routing\Route;
  * - rules_component: The rules component being edited, as provided by the
  *   handler.
  */
-class RulesUiRouteEnhancer implements RouteEnhancerInterface {
+class RulesUiRouteEnhancer implements EnhancerInterface {
 
   /**
    * The rules_ui plugin manager.
@@ -43,16 +42,10 @@ class RulesUiRouteEnhancer implements RouteEnhancerInterface {
   public function enhance(array $defaults, Request $request) {
     // @var $route \Symfony\Component\Routing\Route
     $route = $defaults[RouteObjectInterface::ROUTE_OBJECT];
-    $plugin_id = $route->getOption('_rules_ui');
-    $defaults['rules_ui_handler'] = $this->rulesUiManager->createInstance($plugin_id);
+    if ($plugin_id = $route->getOption('_rules_ui')) {
+      $defaults['rules_ui_handler'] = $this->rulesUiManager->createInstance($plugin_id);
+    }
     return $defaults;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function applies(Route $route) {
-    return ($route->hasOption('_rules_ui'));
   }
 
 }
