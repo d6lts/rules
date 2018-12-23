@@ -24,7 +24,7 @@ class rules_admin_rule_proxy {
    * @param $rule_name The name of the rule
    * @param $rule The rule to create a proxy for.
    */
-  function rules_admin_rule_proxy($rule_name, &$rule) {
+  function __construct($rule_name, &$rule) {
     $rule += array('#conditions' => array(), '#actions' => array());
 
     //save a copy of the original rule for later
