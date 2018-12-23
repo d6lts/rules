@@ -4,8 +4,3 @@ package = Rules
 dependencies[] = simpletest
 dependencies[] = rules
 core = 6.x
-; Information added by Drupal 6 LTS vendors on 2018-12-22
-version = "6.x-1.6"
-core = "6.x"
-project = "rules"
-datestamp = "1545541476"
