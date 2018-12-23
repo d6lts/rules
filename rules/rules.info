@@ -3,3 +3,9 @@ description = Lets you define conditionally executed actions based on occurring 
 package = Rules
 core = 6.x
 php = 5.1
+
+; Information added by Drupal 6 LTS vendors on 2018-12-22
+version = "6.x-1.6"
+core = "6.x"
+project = "rules"
+datestamp = "1545541476"
